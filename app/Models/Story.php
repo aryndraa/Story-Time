@@ -21,7 +21,7 @@ class Story extends Model
 
     public function category()
     {
-        return $this->belongsTo(StoryCategory::class);
+        return $this->hasMany(StoryCategory::class);
     }
 
     public function cover()
