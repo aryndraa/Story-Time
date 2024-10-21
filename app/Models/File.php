@@ -15,7 +15,7 @@ class File extends Model
         'file_type',
     ];
 
-    public function relate()
+    public function related()
     {
         return $this->morphTo();
     }

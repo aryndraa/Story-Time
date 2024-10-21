@@ -14,10 +14,6 @@ class ProfileUser extends Model
     ];
 
     public function user() {
-        return $this->hasOne(User::class);
-    }
-
-    public function avatar() {
-        return $this->morphOne(File::class, 'relate');
+        return $this->belongsTo(User::class);
     }
 }

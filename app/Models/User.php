@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Database\Seeders\BookmarkSeeder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -48,13 +49,22 @@ class User extends Authenticatable
         ];
     }
 
-
     public function profileUser()
     {
-        return $this->belongsTo(ProfileUser::class);
+        return $this->hasOne(ProfileUser::class);
     }
 
-    public function story() {
+    public function avatar()
+    {
+        return $this->morphOne(File::class, 'related');
+    }
+
+    public function stories() {
         return $this->hasMany(Story::class);
+    }
+
+    public function bookmarks()
+    {
+        return $this->hasMany(Bookmark::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\ProfileUser;
 use App\Models\Story;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
