@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Api\V1\Admin\UserManagement;
+namespace App\Http\Resources\Api\V1\Admin\StoryManagement;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class StoriesUserResource extends JsonResource
+class showStoryManagementResource extends JsonResource
 {
     /**
      * Transform the resource into an array.

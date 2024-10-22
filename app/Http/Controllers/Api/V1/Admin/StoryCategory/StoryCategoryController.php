@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1\Admin\CategoryStory;
+namespace App\Http\Controllers\Api\V1\Admin\StoryCategory;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\CategoryStory\UpSerCategoryRequest;
@@ -25,7 +25,7 @@ class StoryCategoryController extends Controller
                 return $query->where('name', 'like', '%' . $keywords . '%');
             })
             ->orderBy($orderBy, $direction)
-            ->get();
+            ->paginate(6);
 
         return indexCategoryResource::collection($storyCategory);
     }

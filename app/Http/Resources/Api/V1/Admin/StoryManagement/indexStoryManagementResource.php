@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Resources\Api\V1\Admin\UserManagement;
+namespace App\Http\Resources\Api\V1\Admin\StoryManagement;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Str;
 
-class StoriesUserResource extends JsonResource
+class indexStoryManagementResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,12 +16,12 @@ class StoriesUserResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"       => $this->id,
-            "title"    => $this->title,
+            "id" => $this->id,
+            "title" => $this->title,
             "content"  => Str::limit($this->content, 50),
-            'category' => [
+            "category" => [
                 "id"   => $this->storyCategory->id,
-                "name" => $this->storyCategory->name,
+                "name" => $this->storyCategory->name
             ],
             "covers"   => $this->cover->map(function ($cover) {
                 return [
