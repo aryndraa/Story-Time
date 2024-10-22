@@ -19,14 +19,14 @@ class Story extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function category()
+    public function StoryCategory()
     {
-        return $this->hasMany(StoryCategory::class);
+        return $this->belongsTo(StoryCategory::class);
     }
 
     public function cover()
     {
-        return $this->morphOne(File::class, 'relate');
+        return $this->morphMany(File::class, 'related');
     }
 
 

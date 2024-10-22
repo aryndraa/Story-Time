@@ -15,19 +15,22 @@ class showUserManagementResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            "id"         => $this->id,
-            "username"   => $this->username,
-            "name"       => $this->name,
-            "email"      => $this->email,
-            "created_at" => $this->created_at,
-            "profile"    => [
-                "avatar" => [
-                    "file_name" => $this->avatar->file_name ?? null,
-                    "file_type" => $this->avatar->file_type ?? null,
-                    "file_path" => $this->avatar->file_path ?? null,
-                ],
-                "about" => $this->profileUser->about_me ?? null
+            "id"         => $this->resource['user']->id,
+            "username"   => $this->resource['user']->username,
+            "name"       => $this->resource['user']->name,
+            "email"      => $this->resource['user']->email,
+            "created_at" => $this->resource['user']->created_at,
+            "avatar" => [
+                "file_name" => $this->resource['user']->avatar->file_name ?? null,
+                "file_type" => $this->resource['user']->avatar->file_type ?? null,
+                "file_path" => $this->resource['user']->avatar->file_path ?? null,
             ],
+            "profile" => [
+                "id" => $this->resource['user']->profileUser->id ?? null,
+                "about_me" => $this->resource['user']->profileUser->about_me ?? null,
+            ],
+            "total_bookmarks" => $this->resource['totalBookmarks'],
+            "total_stories" => $this->resource['totalStories']
         ];
     }
 }
