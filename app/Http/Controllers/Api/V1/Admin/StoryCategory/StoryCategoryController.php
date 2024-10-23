@@ -25,7 +25,7 @@ class StoryCategoryController extends Controller
                 return $query->where('name', 'like', '%' . $keywords . '%');
             })
             ->orderBy($orderBy, $direction)
-            ->paginate(6);
+            ->simplePaginate(6);
 
         return indexCategoryResource::collection($storyCategory);
     }

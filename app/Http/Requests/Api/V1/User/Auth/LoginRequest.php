@@ -22,13 +22,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'credentials' => ['required', function($attribute, $value, $fail) {
-                if(!filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    if (!preg_match('/^[A-Za-z0-9_]+$/', $value)) {
-                        $fail('The :attribute must be a valid email or username.');
-                    }
-                }
-            }],
+            'credential' => ['required', 'string'],
             'password' => ['required', 'min:8'],
         ];
     }

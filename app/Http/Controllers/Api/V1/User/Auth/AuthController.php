@@ -9,21 +9,22 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
     public function login(LoginRequest $request)
     {
-        $validator = $request->only('credentials', 'password');
+        $validator = $request->only('credential', 'password');
 
-        $user = User::query()->where('email', $validator['credentials'])
-                ->orWhere('username', $validator['credentials'])
+        $user = User::query()->where('email', $validator['credential'])
+                ->orWhere('username', $validator['credential'])
                 ->first();
 
-        if (!$user || !Auth::attempt(['email' => $user->email, 'password' => $validator['password']])) {
-            return response()->json([
-                'errors' => 'Invalid credentials or password',
-            ], 401);
+        if (!$user || !Hash::check($validator['password'], $user->password)) {
+            throw ValidationException::withMessages([
+                'credential' => "username/email or password is incorrect",
+            ]);
         }
 
         $token = $user->createToken('User')->plainTextToken;
