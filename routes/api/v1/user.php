@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\User\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Profile\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -18,5 +19,12 @@ Route::prefix('v1/user')
         Route::middleware('auth:user')
             ->group(function () {
                 Route::delete('auth/logout', [AuthController::class, 'logout'])->name('logout');
+                Route::controller(ProfileController::class)
+                    ->prefix('profile')
+                    ->name('profile.')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::post('/', 'update')->name('update');
+                    });
             });
     });

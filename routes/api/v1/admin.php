@@ -37,8 +37,8 @@ Route::prefix('v1/admin')
                   ->group(function () {
                       Route::get('/', 'index')->name('index');
                       Route::get('/{user}', 'show')->name('show');
-                      Route::get('bookmarks/{user}', 'bookmarksUser')->name('bookmarks');
-                      Route::get('stories/{user}', 'storiesUser')->name('stories');
+                      Route::get('{user}/bookmarks/', 'bookmarksUser')->name('bookmarks');
+                      Route::get('{user}/stories/', 'storiesUser')->name('stories');
                       Route::delete('/{user}', 'destroy')->name('destroy');
                   });
 
