@@ -22,12 +22,12 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name"             => ['required', 'string'],
-            "about"            => ['nullable', 'string', 'max:500'],
-            "avatar"           => ['nullable', 'file', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
-            "old_password"     => ['nullable', 'string'],
-            "new_password"     => ['nullable', 'string'],
-            "confirm_password" => ['nullable', 'string'],
+            "name"             => [ 'string'],
+            "about"            => [ 'string', 'max:500'],
+            "avatar"           => [ 'file', 'mimes:jpeg,png,jpg,gif', 'max:2048'],
+            "old_password"     => [ 'string', 'current_password'],
+            "new_password"     => [ 'string', 'min:8'],
+            "confirm_password" => [ 'same:new_password'],
         ];
     }
 }
