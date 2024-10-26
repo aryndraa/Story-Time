@@ -28,13 +28,11 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $user->update($request->only(['name']));
+        $user->fill($request->only('name'))->save();
 
-        if($request->has('about_me')) {
-            $user->profileUser()->updateOrCreate([], [
-                'about_me' => $request->input('about_me')
-            ]);
-        }
+        $user->profileUser()->updateOrCreate([], [
+            'about_me' => $request->input('about_me')
+        ]);
 
         if ($request->hasFile('avatar')) {
             $profilePicture = $request->file('avatar');
@@ -55,6 +53,6 @@ class ProfileController extends Controller
             }
         }
 
-        return UserProfileResource::make($user);
+        return new UserProfileResource($user);
     }
 }
