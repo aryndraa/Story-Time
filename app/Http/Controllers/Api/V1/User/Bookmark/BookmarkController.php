@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\V1\User\Bookmark;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\Bookmark\BookmarkRequest;
+use App\Http\Resources\Api\V1\User\Bookmark\BookmarkResource;
 use App\Models\Bookmark;
 use App\Models\Story;
 use Illuminate\Http\Request;
@@ -17,15 +18,12 @@ class BookmarkController extends Controller
         $bookmark->story()->associate(Story::find($request->input('story_id')));
         $bookmark->save();
 
-        return response()->json([
-            "bookmark" => $bookmark,
-        ]);
+        return BookmarkResource::make($bookmark);
     }
 
     public function destroy(BookmarkRequest $request)
     {
-        $storyId = $request->input('story_id');
-
+        $storyId  = $request->input('story_id');
         $bookmark = Bookmark::query()
             ->where('user_id', auth()->id())
             ->where('story_id', $storyId)
