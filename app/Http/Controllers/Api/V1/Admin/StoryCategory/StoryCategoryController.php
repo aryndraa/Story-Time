@@ -57,8 +57,6 @@ class StoryCategoryController extends Controller
     {
         $category->delete();
 
-        return response([
-            "message" => "Story Category deleted successfully"
-        ]);
+        return response()->noContent();
     }
 }

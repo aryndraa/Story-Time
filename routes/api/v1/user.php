@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\Api\V1\User\Auth\AuthController;
+use App\Http\Controllers\Api\V1\User\Bookmark\BookmarkController;
 use App\Http\Controllers\Api\V1\User\Profile\ProfileController;
+use App\Http\Controllers\Api\V1\User\StoryManagement\StoryManagementController;
+use App\Http\Controllers\Api\V1\User\UserStory\UserStoryController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -25,6 +28,33 @@ Route::prefix('v1/user')
                     ->group(function () {
                         Route::get('/', 'index')->name('index');
                         Route::post('/', 'update')->name('update');
+                    });
+
+                Route::controller(UserStoryController::class)
+                    ->prefix('user-story')
+                    ->name('user-story.')
+                    ->group(function () {
+                       Route::get('/my-stories', 'myStories')->name('my-story');
+                       Route::get('/bookmarked-stories', 'bookmarkedStories')->name('bookmarked-stories');
+                    });
+
+                Route::controller(StoryManagementController::class)
+                    ->prefix('story-management')
+                    ->name('story-management.')
+                    ->group(function () {
+                        Route::get('/', 'index')->name('index');
+                        Route::get('/{story}', 'show')->name('show');
+                        Route::post('/', 'store')->name('store');
+                        Route::post('/{story}', 'update')->name('update');
+                        Route::delete('/{story}', 'destroy')->name('destroy');
+                    });
+
+                Route::controller(BookmarkController::class)
+                    ->prefix('bookmark')
+                    ->name('bookmark.')
+                    ->group(function () {
+                       Route::post('', 'add')->name('add');
+                       Route::delete('', 'destroy')->name('destroy');
                     });
             });
     });

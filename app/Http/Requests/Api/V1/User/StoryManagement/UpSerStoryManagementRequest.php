@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\User\Profile;
+namespace App\Http\Requests\Api\V1\User\StoryManagement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileUpdateRequest extends FormRequest
+class UpSerStoryManagementRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,11 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name"             => [ 'string'],
-            "about"            => [ 'string', 'max:500'],
-            "avatar"           => [ 'file', 'mimes:jpeg,png,jpg', 'max:2048'],
-            "old_password"     => [ 'string', 'current_password'],
-            "new_password"     => [ 'string', 'min:8'],
-            "confirm_password" => [ 'same:new_password'],
+            'title'             => ['required', 'string'],
+            'story_category_id' => ['required', 'exists:story_categories,id'],
+            'content'           => ['required', 'string', 'min:50'],
+            'covers'            => ['required', 'array'],
+            'covers.*'          => ['file','mimes:jpg,jpeg,png', 'max:2048'],
         ];
     }
 }

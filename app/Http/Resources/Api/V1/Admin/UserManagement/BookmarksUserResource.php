@@ -23,14 +23,14 @@ class BookmarksUserResource extends JsonResource
                     "id"   => $this->story->storyCategory->id,
                     "name" => $this->story->storyCategory->name,
                 ],
-                'cover' => $this->story->cover->map(function ($cover) {
+                'covers' => $this->story->covers->map(function ($cover) {
                     return [
                         'file_path' => $cover->file_path,
                         'file_name' => $cover->file_name,
                         'file_type' => $cover->file_type,
                     ];
                 }),
-                'creator' => [
+                'user' => [
                     "id" => $this->story->user->id,
                     "name" => $this->story->user->name,
                     "avatar" => [

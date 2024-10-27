@@ -40,7 +40,7 @@ class UserManagementController extends Controller
     public function bookmarksUser(User $user)
     {
         $bookmarks = Bookmark::query()
-            ->with(['story.storyCategory', 'story.user', 'story.cover'])
+            ->with(['story.storyCategory', 'story.user', 'story.covers'])
             ->where('user_id', $user->id)
             ->paginate(6);
 
@@ -63,8 +63,6 @@ class UserManagementController extends Controller
     {
         $user->delete();
 
-        return response()->json([
-            'message' => "User has been deleted"
-        ]);
+        return response()->noContent();
     }
 }

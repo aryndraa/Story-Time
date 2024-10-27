@@ -20,7 +20,7 @@ class StoryManagementController extends Controller
             ->when($keywords, function ($query) use ($keywords) {
                 return $query->where('name', 'like', '%' . $keywords . '%');
             })
-            ->with('cover', 'storyCategory', 'user')
+            ->with('covers', 'storyCategory', 'user')
             ->orderBy($orderBy, $direction)
             ->paginate(6);
 
@@ -29,7 +29,7 @@ class StoryManagementController extends Controller
 
     public function show(Story $story)
     {
-        $story->load(['cover', 'storyCategory', 'user']);
+        $story->load(['covers', 'storyCategory', 'user']);
 
         return new showStoryManagementResource($story);
     }
@@ -38,8 +38,6 @@ class StoryManagementController extends Controller
     {
         $story->delete();
 
-        return response()->json([
-            "message" => "Story has been deleted"
-        ]);
+        return response()->noContent();
     }
 }
