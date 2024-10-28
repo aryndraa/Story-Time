@@ -29,14 +29,8 @@ class BookmarkController extends Controller
             ->where('story_id', $storyId)
             ->first();
 
-        if ($bookmark) {
-            $bookmark->delete();
+        $bookmark->delete();
 
-            return response()->noContent();
-        }
-
-        return response()->json([
-           "message" => "Bookmark not found",
-        ], 404);
+        return response()->noContent();
     }
 }
