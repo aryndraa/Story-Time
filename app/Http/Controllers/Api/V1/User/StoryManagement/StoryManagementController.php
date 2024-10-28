@@ -9,6 +9,7 @@ use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
 use App\Models\File;
 use App\Models\Story;
 use App\Models\StoryCategory;
+use App\Models\StoryView;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -16,10 +17,10 @@ class StoryManagementController extends Controller
 {
     public function index(Request $request)
     {
-        $userId    = auth()->id();
-        $keywords  = $request->input('keyword');
-        $direction = $request->input('order_direction', 'asc');
-        $orderBy   = $request->input('order_by', 'id');
+            $userId    = auth()->id();
+            $keywords  = $request->input('keyword');
+            $direction = $request->input('order_direction', 'asc');
+            $orderBy   = $request->input('order_by', 'id');
 
         $stories = Story::query()
             ->when($keywords, function ($query) use ($keywords) {
@@ -29,7 +30,11 @@ class StoryManagementController extends Controller
             ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             }])
-            ->orderBy($orderBy, $direction)
+            ->withCount('views')
+            ->orderBy(
+                $orderBy === 'popular' ? 'views_count' : $orderBy,
+                $orderBy === 'popular' ? 'desc' : $direction
+            )
             ->simplePaginate(6);
 
         return IndexStoryManagementResource::collection($stories);
@@ -38,6 +43,19 @@ class StoryManagementController extends Controller
     public function show(Story $story)
     {
         $story->load(['covers', 'storyCategory', 'user', 'user.avatar']);
+        $userId = auth()->id();
+
+        $viewExist = StoryView::query()
+            ->where('story_id', $story->id)
+            ->where('user_id', $userId)
+            ->exists();
+
+        if(!$viewExist) {
+            $storyView = new StoryView();
+            $storyView->story()->associate($story->id);
+            $storyView->user()->associate($userId);
+            $storyView->save();
+        }
 
         return new ShowStoryManagementResource($story);
     }

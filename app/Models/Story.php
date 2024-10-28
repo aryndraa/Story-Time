@@ -11,7 +11,7 @@ class Story extends Model
 
     protected $fillable = [
         'title',
-        'content'
+        'content',
     ];
 
     public function user()
@@ -32,5 +32,10 @@ class Story extends Model
     public function bookmark()
     {
         return $this->hasOne(Bookmark::class);
+    }
+
+    public function views()
+    {
+        return $this->hasMany(StoryView::class);
     }
 }

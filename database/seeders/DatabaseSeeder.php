@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             StorySeeder::class,
             FileSeeder::class,
             BookmarkSeeder::class,
+            StoryViewSeeder::class,
         ]);
     }
 }

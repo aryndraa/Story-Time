@@ -40,6 +40,7 @@ class IndexStoryManagementResource extends JsonResource
                     "file_type" => $this->user->avatar->file_type ?? null,
                 ]
             ],
+            "views" => $this->views_count
         ];
     }
 }

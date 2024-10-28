@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Bookmark::class);
     }
+
+    public function storyViews()
+    {
+        return $this->hasMany(StoryView::class);
+    }
 }
