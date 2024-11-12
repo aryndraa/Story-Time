@@ -18,7 +18,7 @@ class UserProfileResource extends JsonResource
             "id"       => $this->id,
             "name"     => $this->name,
             "email"    => $this->email,
-            "about_me" => $this->profileUser->about_me,
+            "about_me" => $this->profileUser->about_me ?? null,
             "avatar"   => [
                 "file_name" => $this->avatar->file_name ?? null,
                 "file_type" => $this->avatar->file_type ?? null,

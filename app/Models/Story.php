@@ -14,6 +14,16 @@ class Story extends Model
         'content',
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($story) {
+            $story->covers()->delete();
+            $story->views()->delete();
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

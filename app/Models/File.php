@@ -20,7 +20,7 @@ class File extends Model
     public function getFileUrlAttribute()
     {
         if ($this->file_path) {
-            return secure_asset('storage/' . $this->file_path);
+            return asset('storage/' . $this->file_path);
         }
 
         return secure_asset(null);
@@ -38,6 +38,7 @@ class File extends Model
             'file_type' => $fileType,
         ]);
     }
+
 
     public function related()
     {

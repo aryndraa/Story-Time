@@ -13,7 +13,8 @@ class ProfileUser extends Model
         'about_me'
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

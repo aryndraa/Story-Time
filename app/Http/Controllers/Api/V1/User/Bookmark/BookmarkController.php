@@ -18,7 +18,7 @@ class BookmarkController extends Controller
         $bookmark->story()->associate(Story::find($request->input('story_id')));
         $bookmark->save();
 
-        return BookmarkResource::make($bookmark);
+        return response()->noContent();
     }
 
     public function destroy(BookmarkRequest $request)

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Api\V1\User\StoryManagement;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpSerStoryManagementRequest extends FormRequest
+class UpSerStoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
