@@ -3,4 +3,5 @@
     <button type="submit" class="bg-dark border border-neutral-50/5 px-3 text-2xl rounded-lg text-neutral-400">
         <i class='bx bx-search'></i>
     </button>
+
 </form>

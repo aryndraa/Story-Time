@@ -1,17 +1,31 @@
 <?php
 
-use App\Http\Controllers\Web\User\Auth\AuthController;
+use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Web\User\StoryManagement\StoryManagementController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [AuthController::class, 'toLogin'])->name('toLogin');
-Route::get('/register', [AuthController::class, 'toRegister'])->name('toRegister');
-Route::get('/register/confirm', [AuthController::class, 'confirm'])->name('confirm');
-Route::post('/login', [AuthController::class, 'login'])->name('login');
-Route::post('/register', [AuthController::class, 'register'])->name('register');
 
-Route::controller(StoryManagementController::class)
-    ->prefix('/')
+Route::prefix('/')
     ->group(function () {
-        Route::get('', 'index')->name('story.index');
+        Route::controller(StoryManagementController::class)
+            ->group(function () {
+            Route::get('', 'index')->name('story.index');
+        });
+        Route::get('account-management', [AuthController::class, 'toAccount'])->name('toAccount');
+        Route::middleware(['auth'])
+            ->group(function () {
+
+            });
     });
+
+Auth::routes();
+
+
+Route::get('/login', [LoginController::class, 'toLogin'])->middleware('guest');
+Route::post('/login', [LoginController::class, 'login'])->name('login')->middleware('guest');
+Route::get('/register', [RegisterController::class, 'toRegister'])->name('toRegister')->middleware('guest');
+Route::get('/register/confirm', [RegisterController::class, 'confirm'])->name('confirm')->middleware('guest');
+Route::post('/register', [RegisterController::class, 'register'])->name('register')->middleware('guest');

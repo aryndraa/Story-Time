@@ -3,6 +3,8 @@
 @section('content')
     <section class="min-h-screen flex items-center justify-center">
         <form action="{{route('login')}}" method="post" class="p-6 border border-neutral-50/5 w-[28rem]" >
+            @csrf
+            @method('POST')
             <div class="mb-6 pb-6 border-b border-neutral-50/5">
                 <h1 class="text-3xl font-semibold  mb-2">
                     Welcome Back!
@@ -12,7 +14,7 @@
                 </p>
             </div>
             <div class="flex flex-col gap-6 mb-10">
-                <x-form.input-label :label="'Username/Email'" :name="'credentials'" :type="'text'" :placeholder="'example / example@gmail.com '"/>
+                <x-form.input-label :label="'Username/Email'" :name="'credential'" :type="'text'" :placeholder="'example / example@gmail.com '"/>
                 <x-form.input-label :label="'password'" :name="'password'" :type="'password'" :placeholder="'....'"/>
             </div>
             <button class="w-full p-3 text-lg bg-primary font-medium mb-5">

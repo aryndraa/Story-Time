@@ -4,16 +4,21 @@ namespace App\View\Components\Template\Navigation;
 
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
 class ProfileIcon extends Component
 {
+
+    public $user;
+
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct($user=null)
     {
-        //
+        $this->user = $user ?? Auth::user();
     }
 
     /**
