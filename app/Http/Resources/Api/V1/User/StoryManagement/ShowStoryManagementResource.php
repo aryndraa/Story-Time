@@ -25,9 +25,7 @@ class ShowStoryManagementResource extends JsonResource
             ],
             "covers"   => $this->covers->map(function ($cover) {
                 return [
-                    'file_path' => $cover->file_path,
-                    'file_name' => $cover->file_name,
-                    'file_type' => $cover->file_url,
+                    'file_path' => $cover->file_path        ,
                 ];
             }),
             "user" => [

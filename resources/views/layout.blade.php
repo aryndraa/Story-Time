@@ -11,8 +11,15 @@
     {{--  Tailwind  --}}
     @vite('resources/css/app.css')
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+
     {{--  CDN Icon  --}}
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+    />
 </head>
 <body class="ml-64 min-h-screen bg-gradient-to-r from-dark to-neutral-900">
 
@@ -34,5 +41,17 @@
 
     {{--  script  --}}
     @vite('resources/js/app.js')
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const swiper = new Swiper(".mySwiper", {
+                slidesPerView: 4.2,
+                spaceBetween: 8,
+                loop: false,
+            });
+        });
+    </script>
+
 </body>
 </html>

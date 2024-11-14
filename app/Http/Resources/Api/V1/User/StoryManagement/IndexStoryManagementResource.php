@@ -27,18 +27,12 @@ class IndexStoryManagementResource extends JsonResource
             "covers" => $this->covers->map(function ($cover) {
                 return [
                     'file_path' => $cover->file_url,
-                    'file_name' => $cover->file_name,
-                    'file_type' => $cover->file_type,
                 ];
             }),
             "user" => [
                 "id"     => $this->user->id,
                 "name"   => $this->user->name,
-                "avatar" => [
-                    "file_path" => $this->user->avatar->file_url ?? null,
-                    "file_name" => $this->user->avatar->file_name ?? null,
-                    "file_type" => $this->user->avatar->file_type ?? null,
-                ]
+                "avatar" => $this->user->avatar->file_url ?? null,
             ],
             "views" => $this->views_count
         ];

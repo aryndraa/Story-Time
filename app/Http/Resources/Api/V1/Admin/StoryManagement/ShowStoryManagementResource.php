@@ -18,7 +18,7 @@ class showStoryManagementResource extends JsonResource
         return [
             "id"       => $this->id,
             "title"    => $this->title,
-            "content"  => Str::limit($this->content, 50),
+            "content"  => $this->content,
             'category' => [
                 "id"   => $this->storyCategory->id,
                 "name" => $this->storyCategory->name,

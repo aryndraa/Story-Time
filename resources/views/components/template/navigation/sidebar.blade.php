@@ -1,6 +1,6 @@
 <div class="fixed top-0 bottom-0 z-50 left-0 w-64 min-h-screen bg-dark border-r border-neutral-50/5">
     <div class="flex flex-col gap-5">
-        <div class="flex justify-center w-full py-7 border-b border-neutral-50/5">
+        <div class="flex justify-center w-full py-6 border-b border-neutral-50/5">
             <x-template.navigation.logo/>
         </div>
         <div class="px-5">

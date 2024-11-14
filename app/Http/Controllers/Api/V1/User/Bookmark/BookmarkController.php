@@ -11,14 +11,30 @@ use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
 {
-    public function add(BookmarkRequest $request)
+    public function bookmark(Story $story)
     {
-        $bookmark = new Bookmark();
-        $bookmark->user()->associate(auth()->user());
-        $bookmark->story()->associate(Story::find($request->input('story_id')));
-        $bookmark->save();
+        $user     = auth()->user();
+        $bookmark = Bookmark::query()
+            ->where('story_id', $story->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        return response()->noContent();
+        if($bookmark) {
+            $bookmark->delete();
+
+            return response()->json([
+                "message" => "remove to bookmark"
+            ]);
+        }
+
+        $bookmarkStory = new Bookmark();
+        $bookmarkStory->user()->associate($user);
+        $bookmarkStory->story()->associate($story);
+        $bookmarkStory->save();
+
+        return response()->json([
+            "message" => "remove to bookmark"
+        ]);
     }
 
     public function destroy(BookmarkRequest $request)

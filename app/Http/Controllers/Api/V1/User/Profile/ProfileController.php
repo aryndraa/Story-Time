@@ -28,11 +28,7 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
 
-        $user->fill($request->only('name'))->save();
-
-        $user->profileUser()->updateOrCreate([], [
-            'about_me' => $request->input('about_me')
-        ]);
+        $user->fill($request->only('name', 'about_me'))->save();
 
         if ($request->hasFile('avatar')) {
             $profilePicture = $request->file('avatar');

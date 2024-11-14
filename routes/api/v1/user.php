@@ -19,6 +19,14 @@ Route::prefix('v1/user')
                 Route::post('/register', 'register')->name('register');
             });
 
+        Route::controller(StoryManagementController::class)
+            ->prefix('story-management')
+            ->name('story-management.')
+            ->group(function () {
+                Route::get('/', 'index')->name('index');
+                Route::get('/{story}', 'show')->name('show');
+            });
+
         Route::middleware('auth:user')
             ->group(function () {
                 Route::delete('auth/logout', [AuthController::class, 'logout'])->name('logout');
@@ -42,19 +50,12 @@ Route::prefix('v1/user')
                     ->prefix('story-management')
                     ->name('story-management.')
                     ->group(function () {
-                        Route::get('/', 'index')->name('index');
                         Route::get('/{story}', 'show')->name('show');
                         Route::post('/', 'store')->name('store');
                         Route::post('/{story}', 'update')->name('update');
                         Route::delete('/{story}', 'destroy')->name('destroy');
                     });
 
-                Route::controller(BookmarkController::class)
-                    ->prefix('bookmark')
-                    ->name('bookmark.')
-                    ->group(function () {
-                       Route::post('', 'add')->name('add');
-                       Route::delete('', 'destroy')->name('destroy');
-                    });
+                Route::get('/bookmark/{story}', [BookmarkController::class, 'bookmark'])->name('bookmark');
             });
     });

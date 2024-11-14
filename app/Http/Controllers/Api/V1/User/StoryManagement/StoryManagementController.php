@@ -57,10 +57,10 @@ class StoryManagementController extends Controller
             ->where('user_id', $userId)
             ->exists();
 
-        if(!$viewExist) {
+        if(!$viewExist && $userId) {
             $storyView = new StoryView();
-            $storyView->story()->associate($story->id);
             $storyView->user()->associate($userId);
+            $storyView->story()->associate($story->id);
             $storyView->save();
         }
 

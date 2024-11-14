@@ -37,9 +37,16 @@ class StoryManagementController extends Controller
             )
             ->get();
 
+        $newStories = Story::query()
+            ->latest()
+            ->with('covers', 'storyCategory', 'user', 'user.avatar')
+            ->take(8)
+            ->get();
+
         $data = [
-            "stories" => IndexStoryManagementResource::collection($stories),
-            "title"   => "Welcome"
+            "stories"    => IndexStoryManagementResource::collection($stories),
+            "newStories" => IndexStoryManagementResource::collection($newStories),
+            "title"      => "Welcome"
         ];
 
         return view('story.index', compact('data'));
