@@ -38,11 +38,11 @@ class ProfileController extends Controller
                 $user->avatar()->delete();
             }
 
-            File::scopeUploadFile($profilePicture, $user, 'avatar', 'avatars');
+            File::uploadFile($profilePicture, $user, 'avatar', 'avatars');
         }
 
-        if($request->filled('old_password') && $request->filled('new_password')) {
-            if(Hash::check($request->input('old_password'), $user->password)) {
+        if ($request->filled('old_password') && $request->filled('new_password')) {
+            if (Hash::check($request->input('old_password'), $user->password)) {
                 $user->update([
                     'password' => Hash::make($request->input('new_password'))
                 ]);

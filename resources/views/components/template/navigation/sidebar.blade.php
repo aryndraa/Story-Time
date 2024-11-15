@@ -1,7 +1,7 @@
 <div class="fixed top-0 bottom-0 z-50 left-0 w-64 min-h-screen bg-dark border-r border-neutral-50/5">
     <div class="flex flex-col gap-5">
         <div class="flex justify-center w-full py-6 border-b border-neutral-50/5">
-            <x-template.navigation.logo/>
+            <x-template.logo/>
         </div>
         <div class="px-5">
             <h2 class="text-neutral-600  text-sm mb-4">

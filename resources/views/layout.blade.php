@@ -35,23 +35,13 @@
     </main>
 
     {{--  Footer  --}}
-    <footer>
-
-    </footer>
+    <x-template.footer/>
 
     {{--  script  --}}
     @vite('resources/js/app.js')
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const swiper = new Swiper(".mySwiper", {
-                slidesPerView: 4.2,
-                spaceBetween: 8,
-                loop: false,
-            });
-        });
-    </script>
+
 
 </body>
 </html>

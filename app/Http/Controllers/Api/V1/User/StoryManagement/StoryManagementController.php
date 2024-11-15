@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api\V1\User\StoryManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\StoryManagement\UpSerStoryRequest;
-use App\Http\Requests\Api\V1\User\StoryManagement\UpdateStoryRequest;
 use App\Http\Resources\Api\V1\User\StoryManagement\IndexStoryManagementResource;
 use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
 use App\Models\File;
@@ -76,7 +75,7 @@ class StoryManagementController extends Controller
 
         if ($covers = $request->file('covers')) {
             foreach ($covers as $cover) {
-                File::scopeUploadFile($cover, $story, 'covers', 'covers');
+                File::UploadFile($cover, $story, 'covers', 'covers');
             }
         }
 
@@ -95,7 +94,7 @@ class StoryManagementController extends Controller
 
         foreach ($newCovers as $cover) {
             if (!in_array($cover->getClientOriginalName(), $currentCoverIds)) {
-                File::scopeUploadFile($cover, $story, 'covers', 'covers');
+                File::uploadFile($cover, $story, 'covers', 'covers');
             }
         }
 

@@ -21,10 +21,6 @@ class BookmarkController extends Controller
 
         if($bookmark) {
             $bookmark->delete();
-
-            return response()->json([
-                "message" => "remove to bookmark"
-            ]);
         }
 
         $bookmarkStory = new Bookmark();
@@ -32,9 +28,7 @@ class BookmarkController extends Controller
         $bookmarkStory->story()->associate($story);
         $bookmarkStory->save();
 
-        return response()->json([
-            "message" => "remove to bookmark"
-        ]);
+        return response()->noContent();
     }
 
     public function destroy(BookmarkRequest $request)

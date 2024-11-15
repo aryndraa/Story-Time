@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Web\User\StoryManagement;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\User\StoryManagement\IndexStoryManagementResource;
 use App\Models\Story;
+use App\Models\StoryCategory;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class StoryManagementController extends Controller
@@ -18,24 +20,14 @@ class StoryManagementController extends Controller
         $category  = $request->input('category');
 
         $stories = Story::query()
-            ->when($keywords, function ($query) use ($keywords) {
-                return $query->where('title', 'like', '%' . $keywords . '%');
-            })
-            ->when($category, function ($query) use ($category) {
-                return $query->whereHas('storyCategory', function ($query) use ($category) {
-                    $query->where('name', 'like', '%' . $category . '%');
-                });
-            })
-            ->with('covers', 'storyCategory', 'user', 'user.avatar')
-            ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            }])
+            ->with('covers', 'storyCategory')
             ->withCount('views')
-            ->orderBy(
-                $orderBy === 'popular' ? 'views_count' : $orderBy,
-                $orderBy === 'popular' ? 'desc' : $direction
-            )
             ->get();
+
+        $allStories = Story::query()
+            ->with('covers', 'storyCategory', 'user', 'user.avatar')
+            ->withCount('views')
+            ->paginate(4);
 
         $newStories = Story::query()
             ->latest()
@@ -43,10 +35,20 @@ class StoryManagementController extends Controller
             ->take(8)
             ->get();
 
+        $popularStories = Story::query()
+            ->withcount('views')
+            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
+            ->orderBy('views_count', 'desc')
+            ->get();
+
+        $categories = StoryCategory::query()->get();
+
         $data = [
-            "stories"    => IndexStoryManagementResource::collection($stories),
-            "newStories" => IndexStoryManagementResource::collection($newStories),
-            "title"      => "Welcome"
+            "stories"        => IndexStoryManagementResource::collection($stories)->toArray(request()),
+            "newStories"     => IndexStoryManagementResource::collection($newStories),
+            "popularStories" => IndexStoryManagementResource::collection($popularStories),
+            "categories"     => $categories,
+            "title"          => "Welcome"
         ];
 
         return view('story.index', compact('data'));

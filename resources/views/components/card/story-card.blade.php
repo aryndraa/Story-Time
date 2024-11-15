@@ -1,4 +1,4 @@
-    <div class="p-4  border flex-1 border-neutral-50/5 min-w-64 flex flex-col  group cursor-pointer swiper-slide  ">
+<div class="p-4  border flex-1 border-neutral-50/5 min-w-64 flex flex-col  group cursor-pointer swiper-slide  ">
     <div class="min-w-full h-56 max-h-56 overflow-hidden relative self-center ">
         <div class="absolute inset-0 {{$cover2 == null ? 'group-hover:bg-dark/50' : ''}}  z-20 transition duration-300 rel"></div>
         @if($cover2 == null)

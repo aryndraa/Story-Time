@@ -18,7 +18,7 @@ class IndexStoryManagementResource extends JsonResource
         return [
             "id"             => $this->id,
             "title"          => $this->title,
-            "content"        => Str::limit($this->content, 50),
+            "synopsis"        => Str::limit($this->synopsis, 100),
             "has_bookmarked" => $this->has_bookmarked,
             "category"       => [
                 "id"   => $this->storyCategory->id,

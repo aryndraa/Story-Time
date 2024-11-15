@@ -26,7 +26,7 @@ class File extends Model
         return secure_asset(null);
     }
 
-    public static function scopeUploadFile(UploadedFile $file, Model $model, $relation, $directory)
+    public static function uploadFile(UploadedFile $file, Model $model, $relation, $directory)
     {
         $filePath = $file->store($directory, 'public');
         $fileName = $file->getClientOriginalName();

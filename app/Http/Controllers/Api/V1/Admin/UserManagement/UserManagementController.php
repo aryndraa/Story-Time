@@ -50,7 +50,7 @@ class UserManagementController extends Controller
     public function storiesUser(User $user)
     {
         $stories = Story::query()
-            ->with(['cover', 'user', 'storyCategory'])
+            ->with(['covers', 'user', 'storyCategory'])
             ->where('user_id', $user->id)
             ->paginate(6);
 
