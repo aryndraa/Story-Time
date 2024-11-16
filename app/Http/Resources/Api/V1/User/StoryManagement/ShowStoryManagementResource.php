@@ -18,21 +18,25 @@ class ShowStoryManagementResource extends JsonResource
         return [
             "id"       => $this->id,
             "title"    => $this->title,
-            "content"  => $this->content,
+            "synopsis"  => $this->synopsis,
             'category' => [
                 "id"   => $this->storyCategory->id,
                 "name" => $this->storyCategory->name,
             ],
             "covers"   => $this->covers->map(function ($cover) {
                 return [
-                    'file_path' => $cover->file_path        ,
+                    'file_path' => $cover->file_path,
                 ];
             }),
             "user" => [
                 "id"   => $this->user->id,
                 "name" => $this->user->name
             ],
-            "created_at" => $this->created_at
+            "chapters" => $this->chapters_count,
+            "likes" => $this->story_likes_count,
+            "created_at" => $this->created_at,
+            "bookmarked" => $this->has_bookmarked,
+            "liked" => $this->has_likes
         ];
     }
 }

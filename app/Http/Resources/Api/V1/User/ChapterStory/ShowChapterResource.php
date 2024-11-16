@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Resources\Api\V1\User\Bookmark;
+namespace App\Http\Resources\Api\V1\User\ChapterStory;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class BookmarkResource extends JsonResource
+class ShowChapterResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,9 +14,6 @@ class BookmarkResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-          "user_id"  => $this->user_id,
-          "story_id" => $this->story_id
-        ];
+        return parent::toArray($request);
     }
 }

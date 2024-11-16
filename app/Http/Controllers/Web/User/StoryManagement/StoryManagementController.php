@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\User\StoryManagement\IndexStoryManagementResource;
 use App\Models\Story;
 use App\Models\StoryCategory;
+use App\Models\StoryView;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -23,11 +24,6 @@ class StoryManagementController extends Controller
             ->with('covers', 'storyCategory')
             ->withCount('views')
             ->get();
-
-        $allStories = Story::query()
-            ->with('covers', 'storyCategory', 'user', 'user.avatar')
-            ->withCount('views')
-            ->paginate(4);
 
         $newStories = Story::query()
             ->latest()
@@ -52,5 +48,40 @@ class StoryManagementController extends Controller
         ];
 
         return view('story.index', compact('data'));
+    }
+
+    public function show(Story $story)
+    {
+        $userId = auth()->id();
+
+        $detailStory = $story
+            ->with(['covers', 'storyCategory', 'user', 'user.avatar'])
+            ->withCount(['chapters', 'storyLikes', 'views'])
+            ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->withExists(['storyLikes as has_liked' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->findOrFail($story->id);
+
+        $viewExist = StoryView::query()
+            ->where('story_id', $story->id)
+            ->where('user_id', $userId)
+            ->exists();
+
+        if(!$viewExist && $userId) {
+            $storyView = new StoryView();
+            $storyView->user()->associate($userId);
+            $storyView->story()->associate($story->id);
+            $storyView->save();
+        }
+
+        $data = [
+            "title" => $detailStory['title'],
+            "story" => $detailStory,
+        ];
+
+        return view('story.show', compact('data'));
     }
 }

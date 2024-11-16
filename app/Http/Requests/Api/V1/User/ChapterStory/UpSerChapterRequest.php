@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\User\StoryManagement;
+namespace App\Http\Requests\Api\V1\User\ChapterStory;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpSerStoryRequest extends FormRequest
+class UpSerChapterRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,8 @@ class UpSerStoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title'             => ['required', 'string'],
-            'story_category_id' => ['required', 'exists:story_categories,id'],
-            'synopsis'          => ['required', 'string', 'min:50'],
-            'covers'            => ['required', 'array'],
-            'covers.*'          => ['file','mimes:jpg,jpeg,png', 'max:2048'],
+            "title" => ['required', 'string'],
+            "content" => ['required', 'string'],
         ];
     }
 }

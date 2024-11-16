@@ -1,7 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\User\Auth\AuthController;
-use App\Http\Controllers\Api\V1\User\Bookmark\BookmarkController;
+use App\Http\Controllers\Api\V1\User\ActionStory\ActionStoryController;
+use App\Http\Controllers\Api\V1\User\ChapterStory\ChapterStoryController;
 use App\Http\Controllers\Api\V1\User\Profile\ProfileController;
 use App\Http\Controllers\Api\V1\User\StoryManagement\StoryManagementController;
 use App\Http\Controllers\Api\V1\User\UserStory\UserStoryController;
@@ -25,6 +26,14 @@ Route::prefix('v1/user')
             ->group(function () {
                 Route::get('/', 'index')->name('index');
                 Route::get('/{story}', 'show')->name('show');
+            });
+
+        Route::controller(ChapterStoryController::class)
+            ->prefix('chapter')
+            ->name('chapter.')
+            ->group(function () {
+                Route::get('/{story}', 'index')->name('index');
+                Route::get('/{story}/chapter/{chapter}', 'show')->name('show');
             });
 
         Route::middleware('auth:user')
@@ -56,6 +65,16 @@ Route::prefix('v1/user')
                         Route::delete('/{story}', 'destroy')->name('destroy');
                     });
 
-                Route::get('/bookmark/{story}', [BookmarkController::class, 'bookmark'])->name('bookmark');
+                Route::controller(ChapterStoryController::class)
+                    ->prefix('chapter')
+                    ->name('chapter.')
+                    ->group(function () {
+                        Route::get('/{story}', 'index')->name('index');
+                        Route::get('/{story}/chapter/{chapter}', 'show')->name('show');
+                        Route::post('/{story}', 'store')->name('store');
+                    });
+
+                Route::post('/bookmark', [ActionStoryController::class, 'bookmark'])->name('bookmark');
+                Route::post('/like', [ActionStoryController::class, 'like'])->name('like');
             });
     });

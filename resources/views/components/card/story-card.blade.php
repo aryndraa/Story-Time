@@ -1,4 +1,4 @@
-<div class="p-4  border flex-1 border-neutral-50/5 min-w-64 flex flex-col  group cursor-pointer swiper-slide  ">
+<a href="{{route('story.show', $id)}}" class="p-4  border flex-1 border-neutral-50/5 min-w-64 flex flex-col  group cursor-pointer swiper-slide  ">
     <div class="min-w-full h-56 max-h-56 overflow-hidden relative self-center ">
         <div class="absolute inset-0 {{$cover2 == null ? 'group-hover:bg-dark/50' : ''}}  z-20 transition duration-300 rel"></div>
         @if($cover2 == null)
@@ -9,9 +9,11 @@
         @endif
     </div>
     <div class="mt-2">
-        <h1 class="text-base  text-neutral-500 mb-4 hover:text-red-700 hover:underline">{{$title}}</h1>
+        <div class="mb-4">
+            <h1 class="text-base  text-neutral-500 hover:text-red-700 hover:underline">{{$title}}</h1>
+        </div>
         <strong class="text-sm text-neutral-500 font-normal bg-neutral-900 px-4 py-1 capitalize">
             {{$category}}
         </strong>
     </div>
-</div>
+</a>

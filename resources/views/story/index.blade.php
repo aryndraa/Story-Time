@@ -16,7 +16,13 @@
             <div class="swiper latestStories w-full">
                 <div class="swiper-wrapper items-stretch ">
                     @foreach($data['newStories'] as $story)
-                        <x-card.story-card :cover="$story->covers[0]->file_url" :cover2="$story->covers[1]->file_url ?? null" :title="\Illuminate\Support\Str::limit($story->title, 25)" :category="$story->storyCategory->name"/>
+                        <x-card.story-card
+                            :cover="$story->covers[0]->file_url"
+                            :cover2="$story->covers[1]->file_url ?? null"
+                            :title="\Illuminate\Support\Str::limit($story->title, 25)"
+                            :category="$story->storyCategory->name"
+                            :id="$story->id"
+                        />
                     @endforeach
                         <x-card.more-card/>
 
@@ -32,6 +38,7 @@
                         :cover2="$story['covers'][1]['file_path'] ?? null"
                         :title="\Illuminate\Support\Str::limit($story['title'], 25)"
                         :category="$story['category']['name']"
+                        :id="$story['id']"
                     />
                 @endforeach
             </div>
@@ -48,6 +55,7 @@
                             :title="$story['title']"
                             :cover="$story['covers'][0]['file_path']"
                             :synopsis="$story['synopsis']"
+
                         />
                     @endforeach
                 </div>
@@ -67,6 +75,7 @@
                                     :cover2="$story['covers'][1]['file_path'] ?? null"
                                     :title="\Illuminate\Support\Str::limit($story['title'], 25)"
                                     :category="$story['category']['name']"
+                                    :id="$story['id']"
                                 />
                             @endif
                       @endforeach
@@ -87,6 +96,7 @@
                                     :cover2="$story['covers'][1]['file_path'] ?? null"
                                     :title="\Illuminate\Support\Str::limit($story['title'], 25)"
                                     :category="$story['category']['name']"
+                                    :id="$story['id']"
                                 />
                             @endif
                       @endforeach
@@ -108,6 +118,7 @@
                                     :cover2="$story['covers'][1]['file_path'] ?? null"
                                     :title="\Illuminate\Support\Str::limit($story['title'], 25)"
                                     :category="$story['category']['name']"
+                                    :id="$story['id']"
                                 />
                             @endif
                       @endforeach
@@ -137,6 +148,7 @@
                         :cover2="$story['covers'][1]['file_path'] ?? null"
                         :title="\Illuminate\Support\Str::limit($story['title'], 25)"
                         :category="$story['category']['name']"
+                        :id="$story['id']"
                     />
                 @endforeach
             </div>

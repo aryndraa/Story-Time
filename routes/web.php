@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Web\User\ActionStory\ActionStoryController;
 use App\Http\Controllers\Web\User\StoryManagement\StoryManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -12,12 +13,15 @@ Route::prefix('/')
     ->group(function () {
         Route::controller(StoryManagementController::class)
             ->group(function () {
-            Route::get('', 'index')->name('story.index');
+            Route::get('/', 'index')->name('story.index');
+            Route::get('story/{story}', 'show')->name('story.show');
         });
-        Route::get('account-management', [AuthController::class, 'toAccount'])->name('toAccount');
+
         Route::middleware(['auth'])
             ->group(function () {
-
+                Route::get('account-management', [AuthController::class, 'toAccount'])->name('toAccount');
+                Route::post('/bookmark', [ActionStoryController::class, 'bookmark'])->name('bookmark');
+                Route::post('/like', [ActionStoryController::class, 'like'])->name('like');
             });
     });
 

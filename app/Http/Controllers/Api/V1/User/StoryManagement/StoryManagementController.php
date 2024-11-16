@@ -11,6 +11,7 @@ use App\Models\Story;
 use App\Models\StoryCategory;
 use App\Models\StoryView;
 use App\Models\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -48,8 +49,19 @@ class StoryManagementController extends Controller
 
     public function show(Story $story)
     {
-        $story->load(['covers', 'storyCategory', 'user', 'user.avatar']);
         $userId = auth()->id();
+
+        $detailStory = $story
+            ->with(['covers', 'storyCategory', 'user', 'user.avatar'])
+            ->withCount(['chapters', 'storyLikes'])
+            ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->withExists(['storyLikes as has_likes' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->findOrFail($story->id);
+
 
         $viewExist = StoryView::query()
             ->where('story_id', $story->id)
@@ -63,7 +75,7 @@ class StoryManagementController extends Controller
             $storyView->save();
         }
 
-        return new ShowStoryManagementResource($story);
+        return ShowStoryManagementResource::make($detailStory);
     }
 
     public function store(UpSerStoryRequest $request)

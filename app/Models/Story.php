@@ -11,7 +11,7 @@ class Story extends Model
 
     protected $fillable = [
         'title',
-        'content',
+        'synopsis',
     ];
 
     protected static function boot()
@@ -47,5 +47,15 @@ class Story extends Model
     public function views()
     {
         return $this->hasMany(StoryView::class);
+    }
+
+    public function chapters()
+    {
+        return $this->hasMany(StoryChapter::class);
+    }
+
+    public function storyLikes()
+    {
+        return $this->hasMany(StoryLikes::class);
     }
 }

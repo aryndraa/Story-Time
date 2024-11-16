@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\V1\User\Bookmark;
+namespace App\Http\Requests\Api\V1\User\ActionStory;
 
 use Illuminate\Foundation\Http\FormRequest;
 
