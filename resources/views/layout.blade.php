@@ -21,13 +21,13 @@
         href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
 </head>
-<body class="ml-64 min-h-screen bg-gradient-to-r from-dark to-neutral-900">
+<body class="bg-primary-50">
 
     {{--  Header  --}}
     <x-template.navigation.header/>
 
     {{--  Sidebar  --}}
-    <x-template.navigation.sidebar/>
+{{--    <x-template.navigation.sidebar/>--}}
 
     {{--  Main Content  --}}
     <main>
@@ -35,7 +35,7 @@
     </main>
 
     {{--  Footer  --}}
-    <x-template.footer/>
+{{--    <x-template.footer/>--}}
 
     {{--  script  --}}
     @vite('resources/js/app.js')

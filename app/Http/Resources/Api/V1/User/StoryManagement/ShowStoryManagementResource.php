@@ -32,11 +32,18 @@ class ShowStoryManagementResource extends JsonResource
                 "id"   => $this->user->id,
                 "name" => $this->user->name
             ],
-            "chapters" => $this->chapters_count,
-            "likes" => $this->story_likes_count,
+            "total_chapters" => $this->chapters_count,
+            "total_likes" => $this->story_likes_count,
             "created_at" => $this->created_at,
             "bookmarked" => $this->has_bookmarked,
-            "liked" => $this->has_likes
+            "liked" => $this->has_likes,
+            "chapters" => $this->chapters->map(function ($story) {
+                return [
+                    "id"         => $story->id,
+                    "title"      => $story->title,
+                    "created_at" => $story->created_at,
+                ];
+            })
         ];
     }
 }

@@ -52,7 +52,7 @@ class StoryManagementController extends Controller
         $userId = auth()->id();
 
         $detailStory = $story
-            ->with(['covers', 'storyCategory', 'user', 'user.avatar'])
+            ->with(['covers', 'storyCategory', 'user', 'user.avatar', 'chapters'])
             ->withCount(['chapters', 'storyLikes'])
             ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);

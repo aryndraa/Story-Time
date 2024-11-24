@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\User\StoryManagement;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\User\StoryManagement\IndexStoryManagementResource;
+use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
 use App\Models\Story;
 use App\Models\StoryCategory;
 use App\Models\StoryView;
@@ -12,14 +13,8 @@ use Illuminate\Http\Request;
 
 class StoryManagementController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
-        $userId    = auth()->id();
-        $keywords  = $request->input('keyword');
-        $direction = $request->input('order_direction', 'asc');
-        $orderBy   = $request->input('order_by', 'id');
-        $category  = $request->input('category');
-
         $stories = Story::query()
             ->with('covers', 'storyCategory')
             ->withCount('views')
@@ -55,7 +50,7 @@ class StoryManagementController extends Controller
         $userId = auth()->id();
 
         $detailStory = $story
-            ->with(['covers', 'storyCategory', 'user', 'user.avatar'])
+            ->with(['covers', 'storyCategory', 'user', 'user.avatar', 'chapters'])
             ->withCount(['chapters', 'storyLikes', 'views'])
             ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);
@@ -79,9 +74,10 @@ class StoryManagementController extends Controller
 
         $data = [
             "title" => $detailStory['title'],
-            "story" => $detailStory,
+            "story" => ShowStoryManagementResource::make($detailStory),
         ];
 
         return view('story.show', compact('data'));
     }
 }
+

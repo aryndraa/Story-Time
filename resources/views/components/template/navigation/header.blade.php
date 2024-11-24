@@ -1,4 +1,4 @@
-<div class="fixed  left-64 right-0 h-[5.1rem] z-[9999] bg-dark max-w-full px-10  border-b border-neutral-50/5 flex items-center justify-between">
+<div class="px-6 py-5 bg-white flex justify-between items-center fixed top-0 left-0 right-0">
+    <x-template.logo/>
     <x-template.navigation.search-bar/>
-    <x-template.navigation.profile-icon/>
 </div>

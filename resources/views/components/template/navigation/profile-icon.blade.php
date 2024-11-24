@@ -35,15 +35,21 @@
                         x-transition:leave-end="opacity-0 transform scale-95"
                         style="display: none;"
                     >
-                        <a href="/profile" class="py-4 px-6 hover:bg-neutral-900 font-medium text-neutral-400 flex justify-between items-center">
+                        <a href="/profile" class=" py-4 px-6 hover:bg-neutral-900  text-neutral-500 font-medium flex justify-between items-center">
                             Profile
-                            <span class="text-2xl">
+                            <span class="text-2xl text-neutral-500">
                                 <i class='bx bx-user-circle'></i>
                             </span>
                         </a>
-                        <a href="{{route('toAccount')}}" class="py-4 px-6 hover:bg-neutral-900 font-medium text-neutral-400 flex justify-between items-center">
+                        <a href="/" class=" py-4 px-6 hover:bg-neutral-900  text-neutral-500 font-medium flex justify-between items-center">
+                            Your Activity
+                            <span class="text-2xl text-neutral-500">
+                               <i class='bx bx-line-chart'></i>
+                            </span>
+                        </a>
+                        <a href="{{route('toAccount')}}" class=" py-4 px-6 hover:bg-neutral-900  text-neutral-500 font-medium flex justify-between items-center">
                             Account
-                            <span class="text-2xl">
+                            <span class="text-2xl text-neutral-500">
                                 <i class='bx bx-cog' ></i>
                             </span>
                         </a>
@@ -51,9 +57,22 @@
                 </div>
             </div>
         @else
-            <div class="flex items-center gap-4">
-                <a href="/login" class="px-6 py-2 font-medium rounded-lg border border-neutral-50/10 text-neutral-400">Login</a>
-                <a href="/register" class="px-6 py-2 font-medium rounded-lg bg-primary">Register</a>
+            <div class="hidden lg:flex items-center gap-2 lg:gap-4 text-sm lg:text-base">
+                <a href="/login" class="px-3 lg:px-6 py-2 lg:font-medium rounded-lg border border-neutral-50/10 text-neutral-400">Login</a>
+                <a href="/register" class="px-3 lg:px-6 py-2 lg:font-medium rounded-lg bg-primary">Register</a>
+            </div>
+            <div x-data="{ open: false }" class="h-full">
+                <button @click="open = !open" class="h-full  text-2xl text-neutral-400">
+                    <i class='bx bx-menu'></i>
+                </button>
+                <div
+                    x-show="open"
+                    @click.away="open = false"
+                    class="absolute flex flex-col bg-dark w-40 right-6 mt-4 py-2  shadow-lg  z-20 text-sm"
+                >
+                        <a href="/login" class="px-4 lg:px-6 py-3  lg:font-medium  text-neutral-400">Login</a>
+                        <a href="/register" class="px-4 lg:px-6 py-3 lg:font-medium text-neutral-400">Register</a>
+                </div>
             </div>
         @endauth
     @endif
