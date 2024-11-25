@@ -3,12 +3,16 @@
 namespace App\Http\Controllers\Api\V1\User\StoryManagement;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Api\V1\User\ActionStory\BookmarkRequest;
+use App\Http\Requests\Api\V1\User\ActionStory\LikeRequest;
 use App\Http\Requests\Api\V1\User\StoryManagement\UpSerStoryRequest;
 use App\Http\Resources\Api\V1\User\StoryManagement\IndexStoryManagementResource;
 use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
+use App\Models\Bookmark;
 use App\Models\File;
 use App\Models\Story;
 use App\Models\StoryCategory;
+use App\Models\StoryLikes;
 use App\Models\StoryView;
 use App\Models\User;
 use http\Env\Response;
@@ -135,5 +139,48 @@ class StoryManagementController extends Controller
         return response()->noContent();
     }
 
+    public function bookmark(BookmarkRequest $request)
+    {
+        $user     = auth()->user();
+        $story_id = $request->input('story_id');
+
+        $bookmark = Bookmark::query()
+            ->where('story_id', $story_id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if($bookmark) {
+            $bookmark->delete();
+        } else {
+            $bookmarkStory = new Bookmark();
+            $bookmarkStory->user()->associate($user);
+            $bookmarkStory->story()->associate($story_id);
+            $bookmarkStory->save();
+        }
+
+        return response()->noContent();
+    }
+
+    public function like(LikeRequest $request)
+    {
+        $user     = auth()->user();
+        $story_id = $request->input('story_id');
+
+        $like = StoryLikes::query()
+            ->where('story_id', $story_id)
+            ->where('user_id', $user->id)
+            ->first();
+
+        if($like) {
+            $like->delete();
+        } else {
+            $likeStory = new StoryLikes();
+            $likeStory->user()->associate($user);
+            $likeStory->story()->associate($story_id);
+            $likeStory->save();
+        }
+
+        return response()->noContent();
+    }
 
 }

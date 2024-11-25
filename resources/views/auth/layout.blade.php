@@ -21,26 +21,23 @@
         href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
 </head>
-<body class="bg-primary-50 md:ml-24 lg:ml-56 xl:ml-64">
+<body class="bg-white">
 
-    {{--  Header  --}}
-    <x-template.navigation.header/>
 
-    {{--  Sidebar  --}}
-    <x-template.navigation.navbar/>
 
-    {{--  Main Content  --}}
-    <main>
-        @yield('content')
-    </main>
 
-    {{--  Footer  --}}
+{{--  Main Content  --}}
+<main>
+    @yield('content')
+</main>
+
+{{--  Footer  --}}
 {{--    <x-template.footer/>--}}
 
-    {{--  script  --}}
-    @vite('resources/js/app.js')
+{{--  script  --}}
+@vite('resources/js/app.js')
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
 
 </body>

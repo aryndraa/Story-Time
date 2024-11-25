@@ -3,7 +3,6 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
-use App\Http\Controllers\Web\User\ActionStory\ActionStoryController;
 use App\Http\Controllers\Web\User\StoryManagement\StoryManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -19,9 +18,14 @@ Route::prefix('/')
 
         Route::middleware(['auth'])
             ->group(function () {
+                Route::controller(StoryManagementController::class)
+                    ->name('story.')
+                    ->group(function () {
+                        Route::get('/bookmark', 'bookmark')->name('bookmark');
+                        Route::get('/like', 'like')->name('like');
+                    });
+
                 Route::get('account-management', [AuthController::class, 'toAccount'])->name('toAccount');
-                Route::post('/bookmark', [ActionStoryController::class, 'bookmark'])->name('bookmark');
-                Route::post('/like', [ActionStoryController::class, 'like'])->name('like');
             });
     });
 

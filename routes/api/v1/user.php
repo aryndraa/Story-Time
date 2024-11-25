@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\Api\V1\User\Auth\AuthController;
-use App\Http\Controllers\Api\V1\User\ActionStory\ActionStoryController;
 use App\Http\Controllers\Api\V1\User\ChapterStory\ChapterStoryController;
 use App\Http\Controllers\Api\V1\User\Profile\ProfileController;
 use App\Http\Controllers\Api\V1\User\StoryManagement\StoryManagementController;
@@ -63,6 +62,8 @@ Route::prefix('v1/user')
                         Route::post('/', 'store')->name('store');
                         Route::post('/{story}', 'update')->name('update');
                         Route::delete('/{story}', 'destroy')->name('destroy');
+                        Route::delete('/bookmark', 'bookmark')->name('bookmark');
+                        Route::delete('/like', 'like')->name('like');
                     });
 
                 Route::controller(ChapterStoryController::class)
@@ -73,8 +74,5 @@ Route::prefix('v1/user')
                         Route::get('/{story}/chapter/{chapter}', 'show')->name('show');
                         Route::post('/{story}', 'store')->name('store');
                     });
-
-                Route::post('/bookmark', [ActionStoryController::class, 'bookmark'])->name('bookmark');
-                Route::post('/like', [ActionStoryController::class, 'like'])->name('like');
             });
     });
