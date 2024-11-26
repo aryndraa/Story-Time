@@ -18,7 +18,7 @@
                 <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-category'" :title="'Catalog'"/>
                 <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-book'" :title="'My Book'"/>
                 <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bx-trending-up'" :title="'Trending'"/>
-                <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-user-circle'" :title="'Account'"/>
+                <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-user-circle'" :title="'Profile'"/>
             </div>
         </div>
         <div class="px-5 hidden">

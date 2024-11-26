@@ -36,7 +36,7 @@ class StoryManagementController extends Controller
             ->orderBy('views_count', 'desc')
             ->get();
 
-        $categories = StoryCategory::query()->get();
+        $categories = StoryCategory::query()->take(6);
 
         $data = [
             "stories"        => IndexStoryManagementResource::collection($stories)->toArray(request()),

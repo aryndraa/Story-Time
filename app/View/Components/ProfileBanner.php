@@ -1,17 +1,15 @@
 <?php
 
-namespace App\View\Components\Template\Navigation;
+namespace App\View\Components;
 
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\Component;
 
-class ProfileIcon extends Component
+class ProfileBanner extends Component
 {
-
     public $user;
-
 
     /**
      * Create a new component instance.
@@ -26,6 +24,6 @@ class ProfileIcon extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.template.navigation.profile-icon', ['user' => $this->user]);
+        return view('components.profile-banner');
     }
 }

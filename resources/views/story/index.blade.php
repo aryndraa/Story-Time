@@ -1,12 +1,6 @@
 @extends('layout')
 @section('content')
-    <section>
-        <div>
-            @auth
-
-
-            @endauth
-
-        </div>
+    <section class="min-h-screen">
+        <x-profile-banner/>
     </section>
 @endsection

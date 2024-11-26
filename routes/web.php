@@ -25,7 +25,9 @@ Route::prefix('/')
                         Route::get('/like', 'like')->name('like');
                     });
 
+
                 Route::get('account-management', [AuthController::class, 'toAccount'])->name('toAccount');
+                Route::get('logout', [AuthController::class, 'logout'])->name('logout');
             });
     });
 

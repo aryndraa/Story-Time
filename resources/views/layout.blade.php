@@ -21,7 +21,7 @@
         href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
     />
 </head>
-<body class="bg-primary-50 md:ml-24 lg:ml-56 xl:ml-64">
+<body class="md:ml-24 lg:ml-56 xl:ml-64">
 
     {{--  Header  --}}
     <x-template.navigation.header/>
