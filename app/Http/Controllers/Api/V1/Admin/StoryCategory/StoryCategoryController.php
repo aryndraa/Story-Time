@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\Admin\CategoryStory\UpSerCategoryRequest;
 use App\Http\Resources\Api\V1\Admin\CategoryStory\indexCategoryResource;
 use App\Http\Resources\Api\V1\Admin\CategoryStory\showCategoryResource;
-use App\Models\StoryCategory;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class StoryCategoryController extends Controller
@@ -20,7 +20,7 @@ class StoryCategoryController extends Controller
         $direction = $request->input('order_direction', 'asc');
         $orderBy   = $request->input('order_by', 'id');
 
-        $storyCategory = StoryCategory::query()
+        $storyCategory = Category::query()
             ->when($keywords, function ($query) use ($keywords) {
                 return $query->where('name', 'like', '%' . $keywords . '%');
             })
@@ -35,7 +35,7 @@ class StoryCategoryController extends Controller
      */
     public function store(UpSerCategoryRequest $request)
     {
-        $storyCategory = StoryCategory::query()->create($request->validated());
+        $storyCategory = Category::query()->create($request->validated());
 
         return new showCategoryResource($storyCategory);
     }
@@ -43,7 +43,7 @@ class StoryCategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpSerCategoryRequest $request, StoryCategory $category)
+    public function update(UpSerCategoryRequest $request, Category $category)
     {
         $category->update($request->validated());
 
@@ -53,7 +53,7 @@ class StoryCategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(StoryCategory $category)
+    public function destroy(Category $category)
     {
         $category->delete();
 

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\StoryCategory;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class StoryCategorySeeder extends Seeder
+class CategorySeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,7 +18,7 @@ class StoryCategorySeeder extends Seeder
         $chunks = array_chunk(range(1, $totalRecords), $chunkSize);
 
         foreach ($chunks as $chunk) {
-            StoryCategory::factory()->count(count($chunk))->create();
+            Category::factory()->count(count($chunk))->create();
         }
     }
 }

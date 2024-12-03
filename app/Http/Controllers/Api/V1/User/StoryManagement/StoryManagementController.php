@@ -11,7 +11,7 @@ use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
 use App\Models\Bookmark;
 use App\Models\File;
 use App\Models\Story;
-use App\Models\StoryCategory;
+use App\Models\Category;
 use App\Models\StoryLikes;
 use App\Models\StoryView;
 use App\Models\User;
@@ -34,10 +34,10 @@ class StoryManagementController extends Controller
                 return $query->where('title', 'like', '%' . $keywords . '%');
             })
             ->when($category, function ($query) use ($category) {
-                return $query->join('story_categories', 'stories.story_category_id', '=', 'story_categories.id')
-                    ->where('story_categories.name', 'like', '%' . $category . '%');
+                return $query->join('categories', 'stories.categories.category_id', '=', 'categories.id')
+                    ->where('categories.name', 'like', '%' . $category . '%');
             })
-            ->with('covers', 'storyCategory', 'user', 'user.avatar')
+            ->with('covers', 'categories', 'user', 'user.avatar')
             ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);
             }])
@@ -48,7 +48,7 @@ class StoryManagementController extends Controller
             )
             ->simplePaginate(6);
 
-        return IndexStoryManagementResource::collection($stories);
+        return response()->json($stories);
     }
 
     public function show(Story $story)
@@ -56,7 +56,7 @@ class StoryManagementController extends Controller
         $userId = auth()->id();
 
         $detailStory = $story
-            ->with(['covers', 'storyCategory', 'user', 'user.avatar', 'chapters'])
+            ->with(['covers', 'categories', 'user', 'user.avatar', 'chapters'])
             ->withCount(['chapters', 'storyLikes'])
             ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);
@@ -86,8 +86,8 @@ class StoryManagementController extends Controller
     {
         $story = Story::query()->make($request->validated());
         $story->user()->associate(auth()->user());
-        $story->storyCategory()->associate(StoryCategory::find($request->input('story_category_id')));
         $story->save();
+        $story->categories()->sync(Category::query()->find($request->input('categories', [])));
 
         if ($covers = $request->file('covers')) {
             foreach ($covers as $cover) {
@@ -101,7 +101,7 @@ class StoryManagementController extends Controller
     public function update(UpSerStoryRequest $request, Story $story)
     {
         $story->update($request->validated());
-        $story->storyCategory()->associate(StoryCategory::find($request->input('story_category_id')));
+        $story->categories()->sync(Category::query()->find($request->input('categories', [])));
         $story->save();
 
 
@@ -129,7 +129,7 @@ class StoryManagementController extends Controller
         }
 
 
-        return new ShowStoryManagementResource($story);
+        return ShowStoryManagementResource::make($story);
     }
 
     public function destroy(Story $story)

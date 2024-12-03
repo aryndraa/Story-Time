@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class StoryCategory extends Model
+class Category extends Model
 {
     use HasFactory;
 
@@ -15,6 +15,6 @@ class StoryCategory extends Model
 
     public function stories()
     {
-        return $this->hasMany(Story::class, 'story_category_id');
+        return $this->belongsToMany(Story::class, 'story_categories', 'category_id', 'story_id');
     }
 }

@@ -1,4 +1,4 @@
-@extends('auth.layout')
+@extends('layouts.auth')
 
 @section('content')
     <section class="min-h-[95vh] lg:min-h-screen flex flex-col lg:flex-row">
@@ -14,9 +14,9 @@
             </div>
         </div>
         <form
-            action="{{route('login')}}"
-            method="post"
-            class="flex flex-col lg:justify-center gap-16 px-4 md:px-12  py-8 rounded-tr-3xl bg-white flex-1 lg:min-w-[40%] transform -translate-y-4 md:-translate-y-8  " >
+            action="{{route('confirm')}}"
+            method="get"
+            class="flex flex-col lg:justify-center gap-16 px-4 md:px-12  py-8 rounded-tr-3xl bg-white flex-1 lg:min-w-[40%] transform -translate-y-4 md:-translate-y-8  ">
             @csrf
             @method('POST')
             <div>
@@ -27,14 +27,19 @@
                 </div>
                 <div class="flex flex-col gap-5 ">
                     <x-form.input-label :label="'Name'" :name="'name'" :type="'text'" :placeholder="'example'"/>
-                    <x-form.input-label :label="'Username'" :name="'username'" :type="'text'" :placeholder="'example.user'"/>
-                    <x-form.input-label :label="'Email'" :name="'email'" :type="'email'" :placeholder="'example@gmail.com'"/>                </div>
+                    <x-form.input-label :label="'Username'" :name="'username'" :type="'text'"
+                                        :placeholder="'example.user'"/>
+                    <x-form.input-label :label="'Email'" :name="'email'" :type="'email'"
+                                        :placeholder="'example@gmail.com'"/>
+                </div>
             </div>
             <div>
                 <button class="w-full p-3 md:p-4 text-lg bg-primary-100 text-white rounded-lg font-medium mb-5 md:mb-6">
                     Register
                 </button>
-                <p class="text-sm md:text-lg text-neutral-400">Already ave Account? <a href="/login" class="text-primary-100">Login</a></p>
+                <p class="text-sm md:text-lg text-neutral-400">Already ave Account? <a href="/login"
+                                                                                       class="text-primary-100">Login</a>
+                </p>
             </div>
         </form>
     </section>

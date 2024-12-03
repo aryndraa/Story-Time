@@ -4,7 +4,7 @@ use App\Http\Controllers\Api\V1\Admin\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Admin\StoryCategory\StoryCategoryController;
 use App\Http\Controllers\Api\V1\Admin\StoryManagement\StoryManagementController;
 use App\Http\Controllers\Api\V1\Admin\UserManagement\UserManagementController;
-use App\Models\StoryCategory;
+use App\Models\Category;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1/admin')

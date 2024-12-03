@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\StoryCategory;
+use App\Models\Category;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +22,7 @@ class StoryFactory extends Factory
             'title'             => fake()->title(),
             'content'           => fake()->text(),
             'user_id'           => User::inRandomOrder()->first()->id,
-            'story_category_id' => StoryCategory::inRandomOrder()->first()->id,
+            'story_category_id' => Category::inRandomOrder()->first()->id,
         ];
     }
 }

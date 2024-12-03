@@ -9,10 +9,11 @@ use App\Http\Resources\Api\V1\User\StoryManagement\IndexStoryManagementResource;
 use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
 use App\Models\Bookmark;
 use App\Models\Story;
-use App\Models\StoryCategory;
+use App\Models\Category;
 use App\Models\StoryLikes;
 use App\Models\StoryView;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 
 class StoryManagementController extends Controller
@@ -20,29 +21,36 @@ class StoryManagementController extends Controller
     public function index()
     {
         $stories = Story::query()
-            ->with('covers', 'storyCategory')
+            ->with('covers', 'categories', 'user', 'user.avatar')
             ->withCount('views')
             ->get();
 
         $newStories = Story::query()
             ->latest()
-            ->with('covers', 'storyCategory', 'user', 'user.avatar')
-            ->take(8)
+            ->with('covers', 'categories', 'user', 'user.avatar')
+            ->take(6)
             ->get();
 
         $popularStories = Story::query()
             ->withcount('views')
-            ->whereBetween('created_at', [Carbon::now()->startOfWeek(), Carbon::now()->endOfWeek()])
             ->orderBy('views_count', 'desc')
+            ->take(6)
             ->get();
 
-        $categories = StoryCategory::query()->take(6);
+        $categories = Category::query()->take(7)->get();
+
+        $lastView = StoryView::query()->where('user_id', auth()->id())->latest('created_at')->first();
+
+        $lastReading = $lastView ? Story::query()->find($lastView->story_id)->load('covers') : null;
+
+
+
 
         $data = [
-            "stories"        => IndexStoryManagementResource::collection($stories)->toArray(request()),
-            "newStories"     => IndexStoryManagementResource::collection($newStories),
-            "popularStories" => IndexStoryManagementResource::collection($popularStories),
+            "stories"        => IndexStoryManagementResource::collection($stories),
+            "popularStories" => IndexStoryManagementResource::collection($popularStories)->toArray(request()),
             "categories"     => $categories,
+            "lastReading"    => $lastReading,
             "title"          => "Welcome"
         ];
 

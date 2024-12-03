@@ -20,10 +20,12 @@ class IndexStoryManagementResource extends JsonResource
             "title"          => $this->title,
             "synopsis"        => Str::limit($this->synopsis, 100),
             "has_bookmarked" => $this->has_bookmarked,
-            "category"       => [
-                "id"   => $this->storyCategory->id,
-                "name" => $this->storyCategory->name
-            ],
+            "category"       => $this->categories->map(function ($category) {
+                return [
+                    "id"   => $category->id,
+                    "name" => $category->name
+                ];
+            }),
             "covers" => $this->covers->map(function ($cover) {
                 return [
                     'file_path' => $cover->file_url,

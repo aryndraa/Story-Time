@@ -1,6 +1,6 @@
 <div
     id="sidebar"
-    class="fixed  md:top-0 bottom-0 w-full z-50 md:z-[-1] left-0 md:w-24 lg:w-56 xl:w-64 lg:min-h-screen bg-white border-r py-3 lg:py-0 border-neutral-50/5 "
+    class="fixed  md:top-0 bottom-0 w-full z-50 md:z-[-1] left-0 md:w-24 lg:w-56 xl:w-64 lg:min-h-screen bg-white md:border-r py-3 lg:py-0 "
 >
     <div class="flex flex-col md:items-center lg:items-start w-full  gap-5">
         <div class="hidden lg:flex justify-center w-full py-6 border-b border-neutral-50/5">
@@ -14,8 +14,8 @@
                 Menu
             </h2>
             <div class="flex md:flex-col md:w-full md:items-center md:gap-8 justify-between lg:gap-3 ">
-                <x-template.navigation.nav-link href="{{route('story.index')}}" :active="request()->is('/')" :icon="'bx bxs-compass'" :title="'Browse'"/>
-                <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-category'" :title="'Catalog'"/>
+                <x-template.navigation.nav-link href="{{route('story.index')}}" :active="request()->is('/')" :icon="'bx bxs-category '" :title="'Library'"/>
+                <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-compass'" :title="'Browse'"/>
                 <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-book'" :title="'My Book'"/>
                 <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bx-trending-up'" :title="'Trending'"/>
                 <x-template.navigation.nav-link href="#" :active="request()->is('/test')" :icon="'bx bxs-user-circle'" :title="'Profile'"/>

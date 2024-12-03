@@ -18,10 +18,10 @@
 
     <link
         rel="stylesheet"
-        href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"
+        href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
 </head>
-<body class="md:ml-24 lg:ml-56 xl:ml-64">
+<body class="md:ml-24 lg:ml-56 xl:ml-64 ">
 
     {{--  Header  --}}
     <x-template.navigation.header/>
@@ -40,8 +40,19 @@
     {{--  script  --}}
     @vite('resources/js/app.js')
 
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        var release = new Swiper(".newRelease", {
+            slidesPerView:  1.2,
+            spaceBetween: 10,
+        });
+        var categories = new Swiper(".categories", {
+            slidesPerView: 4.6,
+            spaceBetween: 8,
+        });
 
+
+    </script>
 
 </body>
 </html>

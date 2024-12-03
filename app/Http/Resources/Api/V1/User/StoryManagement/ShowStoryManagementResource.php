@@ -19,10 +19,12 @@ class ShowStoryManagementResource extends JsonResource
             "id"       => $this->id,
             "title"    => $this->title,
             "synopsis"  => $this->synopsis,
-            'category' => [
-                "id"   => $this->storyCategory->id,
-                "name" => $this->storyCategory->name,
-            ],
+            'category' => $this->categories->map(function ($category) {
+                return [
+                    "id"   => $category->id,
+                    "name" => $category->name
+                ];
+            }),
             "covers"   => $this->covers->map(function ($cover) {
                 return [
                     'file_path' => $cover->file_path,

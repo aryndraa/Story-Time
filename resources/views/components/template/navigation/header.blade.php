@@ -4,7 +4,7 @@
             <x-template.logo/>
         </div>
         <x-template.navigation.search-bar/>
-        <div class="hidden md:flex items-center gap-5 lg:gap-10">
+        <div class="hidden  md:flex items-center gap-5 lg:gap-8">
             @auth
                 <a href="#" class="text-2xl   text-neutral-600 lg:text-neutral-400 "><i class=' bx bx-cart-alt' ></i></a>
                 <a href="#" class="text-2xl   text-neutral-600 lg:text-neutral-400 "><i class=' bx bx-heart' ></i></a>
