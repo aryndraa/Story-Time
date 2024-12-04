@@ -45,10 +45,23 @@
         var release = new Swiper(".newRelease", {
             slidesPerView:  1.2,
             spaceBetween: 10,
+            breakpoints : {
+                768 : {
+                    slidesPerView:  1.8,
+                    spaceBetween: 10,
+                },
+
+            }
         });
         var categories = new Swiper(".categories", {
             slidesPerView: 4.6,
             spaceBetween: 8,
+            breakpoints : {
+                1024: {
+                    slidesPerView:  6.4,
+                    spaceBetween: 10,
+                }
+            }
         });
 
 

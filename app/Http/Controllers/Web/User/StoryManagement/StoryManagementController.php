@@ -10,6 +10,7 @@ use App\Http\Resources\Api\V1\User\StoryManagement\ShowStoryManagementResource;
 use App\Models\Bookmark;
 use App\Models\Story;
 use App\Models\Category;
+use App\Models\StoryChapter;
 use App\Models\StoryLikes;
 use App\Models\StoryView;
 use Carbon\Carbon;
@@ -57,12 +58,12 @@ class StoryManagementController extends Controller
         return view('story.index', compact('data'));
     }
 
-    public function show(Story $story)
+    public function overview(Story $story)
     {
         $userId = auth()->id();
 
         $detailStory = $story
-            ->with(['covers', 'storyCategory', 'user', 'user.avatar', 'chapters'])
+            ->with(['covers', 'categories', 'user', 'user.avatar', 'chapters'])
             ->withCount(['chapters', 'storyLikes', 'views'])
             ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
                 $query->where('user_id', $userId);
@@ -89,7 +90,36 @@ class StoryManagementController extends Controller
             "story" => ShowStoryManagementResource::make($detailStory),
         ];
 
-        return view('story.show', compact('data'));
+        return view('story.show.overview', compact('data'));
+    }
+
+    public function chapters(Story $story)
+    {
+
+        $userId = auth()->id();
+
+        $detailStory = $story
+            ->with(['covers', 'categories', 'chapters'])
+            ->withCount(['chapters', 'storyLikes', 'views'])
+            ->withExists(['bookmark as has_bookmarked' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->withExists(['storyLikes as has_liked' => function ($query) use ($userId) {
+                $query->where('user_id', $userId);
+            }])
+            ->findOrFail($story->id);
+
+        $chapters = StoryChapter::query()
+            ->where('story_id', $detailStory->id)
+            ->get();
+
+        $data = [
+            "title" => $detailStory['title'],
+            "story" => ShowStoryManagementResource::make($detailStory),
+            "chapters" => IndexStoryManagementResource::collection($chapters),
+        ];
+
+        return view('story.show.chapters', compact('data'));
     }
 
     public function bookmark(BookmarkRequest $request)
@@ -119,7 +149,8 @@ class StoryManagementController extends Controller
     public function like(LikeRequest $request)
     {
         $user     = auth()->user();
-        $story_id = $request->input('story_id');
+
+        $story = $request->input('story_id');
 
         $like = StoryLikes::query()
             ->where('story_id', $story_id)

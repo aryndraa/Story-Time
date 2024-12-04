@@ -2,7 +2,7 @@
     <button class="text-2xl text-slate-500 md:hidden" onclick="toggleSearch()">
         <i class='bx bx-search'></i>
     </button>
-    <div id="searchBar" class="absolute md:relative hidden md:flex inset-0 bg-white z-20 items-center justify-end px-6 py-8  md:px-0 gap-4 md:gap-12 lg:gap-0">
+    <div id="searchBar" class="absolute md:relative hidden md:flex inset-0 bg-white z-20 items-center justify-end px-6 py-8 md:py-0  md:px-0 gap-4 md:gap-12 lg:gap-0">
         <button type="button" onclick="toggleSearch()" class="text-2xl text-neutral-400 md:hidden">
             <i class='bx bx-arrow-back'></i>
         </button>

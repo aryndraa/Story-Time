@@ -2,8 +2,10 @@
 @section('content')
     <section class="min-h-[200vh]">
         <x-profile-banner/>
-        <div class="w-full mt-6 ">
-            <x-section-title :title="'Popular Book'"/>
+        <div class="w-full mt-6 lg:mt-24 ">
+            <span class="hidden md:block">
+                <x-section-title :title="'Library'"/>
+            </span>
             <div class="swiper newRelease ">
                 <div class="swiper-wrapper px-4">
                     @foreach($data['popularStories'] as $story)
@@ -20,8 +22,7 @@
 
         @auth
             @if(isset($data['lastReading']))
-
-                <div class="mt-6">
+                <div class="mt-6 md:hidden">
                     <x-section-title :title="'Continue To Reading'"/>
                     <div class="px-4">
                         <x-card.last-reading-card
@@ -35,30 +36,14 @@
         @endauth
 
         <div class="mt-6 ">
-            <div class=" w-full swiper categories  mx-auto mb-6 ">
-                <div class="swiper-wrapper ">
-                    @foreach($data['categories'] as $category)
-                        <div class="swiper-slide min-w-fit">
-                            <a href="/"
-                               class="flex items-center justify-center text-sm font-medium text-slate-500 ">
-                                {{$category['name']}}
-                            </a>
-                        </div>
-                    @endforeach
-                    <div class="swiper-slide ">
-                        <a href="/"
-                           class="text-sm font-medium flex items-center justify-center text-slate-500">
-                            More
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <x-section-title :title="'Library'"/>
-            <div class="grid grid-cols-2 px-4 gap-4 ">
+            <span class="md:hidden">
+                <x-section-title :title="'Library'"/>
+            </span>
+            <div class="grid grid-cols-2 md:grid-cols-3  px-4 gap-4 lg:gap-y-6 ">
                 @foreach($data['stories'] as $story)
                     <x-card.story-card
-                        :cover="$story->covers[0]->file_url"
+                        :id="$story->id"
+                        :covers="$story->covers"
                         :avatar="$story->user->avatar->file_url"
                         :title="$story->title "
                         :creator="$story->user->name"

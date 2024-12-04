@@ -48,7 +48,7 @@ class StoryManagementController extends Controller
             )
             ->simplePaginate(6);
 
-        return response()->json($stories);
+        return IndexStoryManagementResource::collection($stories);
     }
 
     public function show(Story $story)
@@ -164,10 +164,10 @@ class StoryManagementController extends Controller
     public function like(LikeRequest $request)
     {
         $user     = auth()->user();
-        $story_id = $request->input('story_id');
+        $story = Story::query()->findOrFail($request->input('story_id'));
 
         $like = StoryLikes::query()
-            ->where('story_id', $story_id)
+            ->where('story_id', $story->id)
             ->where('user_id', $user->id)
             ->first();
 
@@ -176,7 +176,7 @@ class StoryManagementController extends Controller
         } else {
             $likeStory = new StoryLikes();
             $likeStory->user()->associate($user);
-            $likeStory->story()->associate($story_id);
+            $likeStory->story()->associate($story);
             $likeStory->save();
         }
 

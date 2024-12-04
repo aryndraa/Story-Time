@@ -13,7 +13,8 @@ Route::prefix('/')
         Route::controller(StoryManagementController::class)
             ->group(function () {
             Route::get('/', 'index')->name('story.index');
-            Route::get('story/{story}', 'show')->name('story.show');
+            Route::get('/{story}/overview', 'overview')->name('story.show.overview');
+            Route::get('/{story}/chapters', 'chapters')->name('story.show.chapters');
         });
 
         Route::middleware(['auth'])

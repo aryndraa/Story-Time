@@ -9,7 +9,7 @@
                     <button @click="open = !open" class="flex items-center gap-3 ">
                         <div>
                             @if($user->avatar)
-                                <img src="{{ $user->avatar->file_url }}" alt="" class="w-8 max-h-8 lg:w-10 lg:h-10 rounded-full object-cover">
+                                <img src="{{ $user->avatar->file_url }}" alt="" class="w-8 h-8 lg:w-10 lg:h-10 rounded-full object-cover">
                             @else
                                 <div class="flex justify-center items-center capitalize w-8 h-8 lg:w-10 lg:h-10 rounded-full bg-primary-100 text-white">
                                     {{ \Illuminate\Support\Str::charAt($user->username, 0) }}
@@ -21,7 +21,7 @@
                     <div
                         x-show="open"
                         @click.away="open = false"
-                        class="absolute flex-col bg-dark w-64 right-0 mt-4  shadow-lg  z-20"
+                        class="absolute flex-col bg-dark w-64 right-0 mt-4  shadow-lg  z-20 bg-white"
                         x-transition:enter="transition ease-out duration-100"
                         x-transition:enter-start="opacity-0 transform scale-95"
                         x-transition:enter-end="opacity-100 transform scale-100"

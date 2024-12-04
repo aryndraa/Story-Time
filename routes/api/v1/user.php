@@ -62,8 +62,8 @@ Route::prefix('v1/user')
                         Route::post('/', 'store')->name('store');
                         Route::post('/{story}', 'update')->name('update');
                         Route::delete('/{story}', 'destroy')->name('destroy');
-                        Route::delete('/bookmark', 'bookmark')->name('bookmark');
-                        Route::delete('/like', 'like')->name('like');
+                        Route::post('/action/bookmark', 'bookmark')->name('bookmark');
+                        Route::post('/action/like', 'like')->name('like');
                     });
 
                 Route::controller(ChapterStoryController::class)
@@ -71,7 +71,7 @@ Route::prefix('v1/user')
                     ->name('chapter.')
                     ->group(function () {
                         Route::get('/{story}', 'index')->name('index');
-                        Route::get('/{story}/chapter/{chapter}', 'show')->name('show');
+                        Route::get('/content/{chapter}', 'show')->name('show');
                         Route::post('/{story}', 'store')->name('store');
                     });
             });

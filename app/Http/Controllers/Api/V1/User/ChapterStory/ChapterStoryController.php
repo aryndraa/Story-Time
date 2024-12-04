@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User\ChapterStory;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\V1\User\ChapterStory\UpSerChapterRequest;
 use App\Http\Resources\Api\V1\User\ChapterStory\IndexChapterResource;
+use App\Http\Resources\Api\V1\User\ChapterStory\ShowChapterResource;
 use App\Models\ChapterView;
 use App\Models\Story;
 use App\Models\StoryChapter;
@@ -26,16 +27,9 @@ class ChapterStoryController extends Controller
         return IndexChapterResource::collection($chapters);
     }
 
-    public function show(Story $story, StoryChapter $chapter)
+    public function show(StoryChapter $chapter)
     {
         $userId = auth()->id();
-
-        $content = $story
-            ->chapters()
-            ->withExists(['chapterView as view' => function ($query) use ($userId) {
-                $query->where('user_id', $userId);
-            }])
-            ->get();
 
         $viewExist = ChapterView::query()
             ->where('user_id', $userId)
@@ -49,7 +43,7 @@ class ChapterStoryController extends Controller
             $view->save();
         }
 
-        return response()->json($content);
+        return  ShowChapterResource::make($chapter);
     }
 
 
