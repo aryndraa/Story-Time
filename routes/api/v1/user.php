@@ -73,6 +73,7 @@ Route::prefix('v1/user')
                         Route::get('/{story}', 'index')->name('index');
                         Route::get('/content/{chapter}', 'show')->name('show');
                         Route::post('/{story}', 'store')->name('store');
+                        Route::patch('/edit/{chapter}', 'update')->name('update');
                     });
             });
     });

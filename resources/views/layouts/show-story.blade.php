@@ -40,15 +40,18 @@
                 <a href="{{route('story.show.overview', $data['story']->id)}}">{{$data['story']->title}}</a>
             </div>
             <h1 class="text-2xl font-medium text-slate-700 mb-2">{{$data['story']->title}}</h1>
-            <div class="flex items-center gap-2 mb-4">
-                <img src="{{$data['story']->user->avatar->file_url}}" alt="" class="w-6 h-6 object-cover rounded-full">
-                <p class="text-sm font-medium text-slate-600">{{$data['story']->user->name}}</p>
-            </div>
             <div class="flex items-center gap-4 mb-4">
                 <div class="flex gap-2 items-center text-slate-600">
-                    <span>
-                        <i class='bx bxs-heart'></i>
-                    </span>
+                    @if($data['story']->has_liked)
+                        <span class="text-pink-500">
+                            <i class='bx bxs-heart'></i>
+                        </span>
+                    @else
+                        <span >
+                            <i class='bx bxs-heart'></i>
+                        </span>
+                    @endif
+
                     <p class="text-slate-600" >
                         {{$data['story']->story_likes_count }} Likes
                     </p>
@@ -71,8 +74,37 @@
                 @endforeach
             </div>
         </div>
+        <div class="mx-4 flex gap-3 mb-4">
+            <form action="{{route('story.like')}}" method="post" class="flex-1" >
+                @csrf
+                <input type="hidden" name="story_id" value="{{$data['story']->id}}">
+                @if($data['story']->has_liked)
+                    <button type="submit" class="flex justify-center items-center w-full p-3 bg-primary-100 text-white gap-1 font-semibold rounded-lg text-xl">
+                        <i class='bx bxs-like' ></i>
+                    </button>
+                @else
+                    <button type="submit" class="flex justify-center items-center w-full p-3 bg-primary-100 text-white gap-1 font-semibold rounded-lg text-xl">
+                        <i class='bx bx-like'></i>
+                    </button>
+                @endif
+            </form>
+            <form action="{{route('story.bookmark')}}" method="post"  class="flex-1" >
+                @csrf
+                <input type="hidden" name="story_id" value="{{$data['story']->id}}">
+                @if($data['story']->has_bookmarked)
+                    <button type="submit" class="flex justify-center items-center w-full p-3 bg-primary-100/10 text-primary-100 gap-1 font-semibold rounded-lg text-xl">
+                        <i class='bx bx-bookmark' ></i>
+                    </button>
+                @else
+                    <button type="submit" class="flex justify-center items-center w-full p-3 bg-primary-100/10 text-primary-100 gap-1 font-semibold rounded-lg text-xl">
+                        <i class='bx bxs-bookmark' ></i>
+                    </button>
+                @endif
+
+            </form>
+        </div>
         <div class="mx-4">
-            <div class="flex gap-5 items-center py-4 border-y mb-4 border-slate-200 ">
+            <div class="flex gap-5 items-center py-5 border-y mb-4 border-slate-200 ">
                 <a
                     href="{{route('story.show.overview', $data['story']->id)}}" class="font-medium {{request()->is($data['story']->id .'/overview') ? "text-primary-100" : "text-slate-600"}} "
                     aria-current="{{request()->is($data['story']->id .'/overview') ? 'page' : false}}"

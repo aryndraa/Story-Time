@@ -124,7 +124,7 @@ class StoryManagementController extends Controller
 
     public function bookmark(BookmarkRequest $request)
     {
-        $user     = auth()->user();
+        $user = auth()->user();
         $story_id = $request->input('story_id');
 
         $bookmark = Bookmark::query()
@@ -142,15 +142,13 @@ class StoryManagementController extends Controller
             $bookmarkStory->save();
         }
 
-        $story = Story::findOrFail($story_id);
-        return redirect()->route('story.show', [$story]);
+        return redirect()->to(url()->previous());
     }
 
     public function like(LikeRequest $request)
     {
-        $user     = auth()->user();
-
-        $story = $request->input('story_id');
+        $user = auth()->user();
+        $story_id = $request->input('story_id');
 
         $like = StoryLikes::query()
             ->where('story_id', $story_id)
@@ -166,8 +164,7 @@ class StoryManagementController extends Controller
             $likeStory->save();
         }
 
-        $story = Story::findOrFail($story_id);
-        return redirect()->route('story.show', [$story]);
+        return redirect()->to(url()->previous());
     }
 }
 

@@ -55,4 +55,11 @@ class ChapterStoryController extends Controller
 
         return response()->json($chapter);
     }
+
+    public function update(UpSerChapterRequest $request,  StoryChapter $chapter)
+    {
+        $chapter->update($request->validated());
+
+        return response()->json($chapter);
+    }
 }

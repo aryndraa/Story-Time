@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Web\User\ChapterStory\ChapterStoryController;
 use App\Http\Controllers\Web\User\StoryManagement\StoryManagementController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -22,8 +23,14 @@ Route::prefix('/')
                 Route::controller(StoryManagementController::class)
                     ->name('story.')
                     ->group(function () {
-                        Route::get('/bookmark', 'bookmark')->name('bookmark');
-                        Route::get('/like', 'like')->name('like');
+                        Route::post('/bookmark', 'bookmark')->name('bookmark');
+                        Route::post('/like', 'like')->name('like');
+                    });
+
+                Route::controller(ChapterStoryController::class)
+                    ->name('chapter.')
+                    ->group(function () {
+                        Route::get('/{story}/chapters/{chapter}', 'show')->name('show');
                     });
 
 
